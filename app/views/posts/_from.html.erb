@@ -1,0 +1,23 @@
+<%= form_with(model: @post) do |f| %>
+  <% if @post.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :content %><br>
+    <%= f.text_area :content %>
+  </div>
+
+  <%= f.submit %>
+<% end %>

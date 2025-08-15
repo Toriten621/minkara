@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Minkara</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+  <header style="background-color: #f8f8f8; padding: 10px;">
+  <nav>
+    <%= link_to "About", about_path %> |
+    <%= link_to "投稿一覧", _path %> |
+    <%= link_to "新規投稿", new_post_path %> |
+    <%= link_to "マイページ", user_path(current_user) if user_signed_in? %> |
+    <%= link_to "ログイン", new_user_session_path %>
+    <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" } if user_signed_in? %>
+  </nav>
+  <div style="margin-left:auto;">
+  <%= form_with url: posts_path, method: :get, local: true do |f| %>
+    <%= f.text_field :keyword, placeholder: "検索" %>
+    <%= f.submit "検索" %>
+        <% end %>
+      </div>
+    </header>d
+</header>
+    <%= yield %>
+  </body>
+</html>
