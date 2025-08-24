@@ -4,7 +4,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :posts, dependent: :destroy
-  has_many :articles, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_one_attached :profile_image
-  validates :name, presence: true
+  before_validation :set_default_name, on: :create
+
+  private
+
+  def set_default_name
+    self.name = "名無し" if self.name.blank?
+  end
 end

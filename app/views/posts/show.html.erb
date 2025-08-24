@@ -1,10 +1,28 @@
 <h1><%= @post.title %></h1>
-<p><%= @post.content %></p>
+<p><%= @post.body %></p>
 <p>作成者: <%= @post.user.email %></p>
 
 <% if user_signed_in? && @post.user == current_user %>
   <%= link_to '編集', edit_post_path(@post) %>
   <%= link_to '削除', post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+<% end %>
+<h3>コメント一覧</h3>
+<% @post.comments.each do |comment| %>
+  <p>
+    <strong><%= comment.user.name %>:</strong> 
+    <%= comment.body.presence || "(画像のみ)" %>
+  </p>
+  <% if comment.image.attached? %>
+    <%= image_tag comment.image, size: "200x200" %>
+  <% end %>
+<% end %>
+
+<hr>
+
+<%= form_with(model: [@post, Comment.new], local: true) do |f| %>
+  <%= f.text_area :body, placeholder: "コメントを入力" %><br>
+  <%= f.file_field :image %><br>
+  <%= f.submit "コメントする" %>
 <% end %>
 
 <%= link_to '一覧へ戻る', posts_path %>
