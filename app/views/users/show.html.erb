@@ -2,7 +2,7 @@
 <% if @user.profile_image.attached? %>
   <%= image_tag @user.profile_image, size: "200x200", class: "rounded-circle" %>
 <% else %>
-  <%= image_tag "default.png", size: "200x200", class: "rounded-circle" %>
+  <%= image_tag asset_path("default-image.jpg"), size: "200x200", class: "rounded-circle" %>
 <% end %>
 <h3>自己紹介</h3>
 <p><%= simple_format(@user.introduction) if @user.introduction.present? %></p>
