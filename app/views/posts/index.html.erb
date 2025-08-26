@@ -1,12 +1,27 @@
-<h1>投稿一覧</h1>
+<div class="container mt-4">
 
-<% @posts.each do |post| %>
-  <div>
-    <h2><%= link_to post.title, post %></h2>
-    <p>作成者: <%= post.user.email %></p>
+  <h1 class="mb-4">投稿一覧</h1>
+
+  <!-- 投稿一覧 -->
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to post.title, post %></h5>
+            <p class="card-text text-muted">
+              作成者: <%= post.user.name.presence || post.user.email %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
 
-<% if user_signed_in? %>
-  <%= link_to '新規投稿', new_post_path %>
-<% end %>
+  <% if user_signed_in? %>
+    <div class="text-end mt-3">
+      <%= link_to '新規投稿', new_post_path, class: "btn btn-success" %>
+    </div>
+  <% end %>
+
+</div>

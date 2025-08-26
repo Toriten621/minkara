@@ -5,30 +5,50 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <!-- Bootstrap CSS 読み込み -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-  <p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-  <header style="background-color: #f8f8f8; padding: 10px;">
-  <nav>
-  <%= link_to "About", about_path %> |
-  <%= link_to "投稿一覧", posts_path %> |
-  <%= link_to "新規投稿", new_post_path %> |
-  <%= link_to "マイページ", user_path(current_user) if user_signed_in? %>
-  <%= link_to "ログイン", new_user_session_path %>
-  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" } %>
-  </nav>
-  <div style="margin-left:auto;">
-  <%= form_with url: posts_path, method: :get, local: true do |f| %>
-    <%= f.text_field :keyword, placeholder: "検索" %>
-    <%= f.submit "検索" %>
-        <% end %>
-      </div>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <!-- 左側リンク -->
+          <a class="navbar-brand" href="/">Minkara</a>
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
+              <li class="nav-item"><%= link_to "投稿一覧", posts_path, class: "nav-link" %></li>
+              <li class="nav-item"><%= link_to "新規投稿", new_post_path, class: "nav-link" %></li>
+              <% if user_signed_in? %>
+                <li class="nav-item"><%= link_to "マイページ", user_path(current_user), class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" }, class: "nav-link" %></li>
+              <% else %>
+                <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "nav-link" %></li>
+              <% end %>
+            </ul>
+
+            <!-- 右側 検索フォーム -->
+            <%= form_with url: posts_path, method: :get, local: true, class: "d-flex" do |f| %>
+              <%= f.text_field :keyword, placeholder: "検索", class: "form-control me-2" %>
+              <%= f.submit "検索", class: "btn btn-outline-success" %>
+            <% end %>
+          </div>
+        </div>
+      </nav>
     </header>
-</header>
-    <%= yield %>
+
+    <main class="container mt-4">
+      <p class="notice text-success"><%= notice %></p>
+      <p class="alert text-danger"><%= alert %></p>
+      <%= yield %>
+    </main>
+
+    <!-- Bootstrap JS 読み込み -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

@@ -4,7 +4,15 @@ class PostsController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.search(params[:query]).includes(:user)
+    if params[:keyword].present?
+      @posts = Post.joins(:user).where(
+        "posts.title LIKE :keyword OR posts.body LIKE :keyword OR users.name LIKE :keyword",
+        keyword: "%#{params[:keyword]}%"
+      ).includes(:user).order(created_at: :desc)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
   end
 
   def show
