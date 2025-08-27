@@ -1,0 +1,32 @@
+<h2><%= @group.name %></h2>
+<p><%= @group.description %></p>
+
+<h3>メンバー一覧</h3>
+<ul>
+  <% @group.users.each do |user| %>
+    <li><%= user.name %></li>
+  <% end %>
+</ul>
+
+<% if @group.owner == current_user %>
+  <%= link_to "削除", @group, method: :delete, data: { confirm: "削除しますか？" } %>
+<% end %>
+<h2><%= @group.name %> 掲示板</h2>
+
+<div class="posts">
+  <% @group.group_posts.includes(:user).order(created_at: :desc).each do |post| %>
+    <div class="post mb-2 p-2 border rounded">
+      <strong><%= post.user.name %></strong>:
+      <%= post.content %><br>
+      <small><%= l(post.created_at, format: :short) %></small>
+    </div>
+  <% end %>
+</div>
+
+<h3>新しい投稿</h3>
+<%= form_with model: [@group, GroupPost.new], local: true do |f| %>
+  <div class="form-group">
+    <%= f.text_area :content, class: "form-control", rows: 3 %>
+  </div>
+  <%= f.submit "投稿", class: "btn btn-primary mt-2" %>
+<% end %>

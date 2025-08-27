@@ -1,0 +1,23 @@
+<%= form_with(model: @group, local: true) do |f| %>
+  <div>
+    <%= f.label :name, "グループ名" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :description, "グループ説明" %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <h3>メンバーを追加</h3>
+    <% User.where.not(id: current_user.id).each do |user| %>
+      <div>
+        <%= check_box_tag "group[user_ids][]", user.id, @group.users.include?(user) %>
+        <%= user.name %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= f.submit %>
+<% end %>

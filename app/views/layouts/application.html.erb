@@ -26,6 +26,8 @@
               <li class="nav-item"><%= link_to "新規投稿", new_post_path, class: "nav-link" %></li>
               <% if user_signed_in? %>
                 <li class="nav-item"><%= link_to "マイページ", user_path(current_user), class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to "グループ一覧", groups_path, class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to "グループ作成", new_group_path, class: "nav-link" %></li>
                 <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
               <% else %>
                 <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "nav-link" %></li>

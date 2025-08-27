@@ -7,7 +7,11 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_one_attached :profile_image
   before_validation :set_default_name, on: :create
-
+  has_many :group_users
+  has_many :groups, through: :group_users
+  has_many :group_posts, dependent: :destroy
+  has_many :group_topics, dependent: :destroy
+  has_many :group_comments, dependent: :destroy
   private
 
   def set_default_name

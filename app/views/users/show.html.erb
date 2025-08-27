@@ -6,6 +6,12 @@
 <% end %>
 <h3>自己紹介</h3>
 <p><%= simple_format(@user.introduction) if @user.introduction.present? %></p>
+<h3>所属グループ</h3>
+<ul>
+  <% @user.groups.each do |group| %>
+    <li><%= link_to group.name, group %></li>
+  <% end %>
+</ul>
 <h2>あなたの投稿一覧</h2>
 <% @posts.each do |post| %>
   <p>

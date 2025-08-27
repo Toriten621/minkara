@@ -1,0 +1,12 @@
+<h2><%= @group.name %> の掲示板</h2>
+
+<%= link_to "新規トピック作成", new_group_group_topic_path(@group), class: "btn btn-primary mb-3" %>
+
+<ul>
+  <% @topics.each do |topic| %>
+    <li>
+      <%= link_to topic.title, [@group, topic] %>
+      <small> by <%= topic.user.name %> (<%= l(topic.created_at, format: :short) %>)</small>
+    </li>
+  <% end %>
+</ul>

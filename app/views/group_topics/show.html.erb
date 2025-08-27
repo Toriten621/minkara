@@ -1,0 +1,22 @@
+<h2><%= @topic.title %></h2>
+<p><%= @topic.content %></p>
+<small>by <%= @topic.user.name %> (<%= l(@topic.created_at, format: :short) %>)</small>
+
+<hr>
+
+<h3>コメント</h3>
+<div class="comments">
+  <% @comments.each do |comment| %>
+    <div class="border p-2 mb-2">
+      <strong><%= comment.user.name %>:</strong>
+      <%= comment.content %><br>
+      <small><%= l(comment.created_at, format: :short) %></small>
+    </div>
+  <% end %>
+</div>
+
+<h3>コメントを書く</h3>
+<%= form_with model: [@topic, GroupComment.new], url: group_group_topic_group_comments_path(@topic.group, @topic), local: true do |f| %>
+  <%= f.text_area :content, class: "form-control mb-2", rows: 3 %>
+  <%= f.submit "投稿", class: "btn btn-success" %>
+<% end %>
