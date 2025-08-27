@@ -16,11 +16,17 @@ Rails.application.routes.draw do
 
   get 'about', to: 'homes#about'
   resources :groups do
+    member do
+      post :join
+      delete :leave
+    end
+  
     resources :group_posts, only: [:create, :destroy]
     resources :group_topics do
-      resources :group_comments, only: :create 
+      resources :group_comments, only: :create
     end
   end
+  
   resources :posts do
     resources :comments, only: [:create]
   end

@@ -50,6 +50,21 @@ class GroupsController < ApplicationController
     @group.destroy
     redirect_to groups_path, notice: "グループを削除しました"
   end
+  def join
+    group = Group.find(params[:id])
+    unless group.users.include?(current_user)
+      group.users << current_user
+    end
+    redirect_to group_path(group), notice: "グループに参加しました"
+  end
+
+  def leave
+    group = Group.find(params[:id])
+    if group.users.include?(current_user)
+      group.users.delete(current_user)
+    end
+    redirect_to groups_path, notice: "グループを脱退しました"
+  end
 
   private
 

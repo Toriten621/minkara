@@ -8,9 +8,22 @@
   <% end %>
 </ul>
 
-<% if @group.owner == current_user %>
-  <%= link_to "削除", @group, method: :delete, data: { confirm: "削除しますか？" } %>
+<% if @group.users.include?(current_user) %>
+  <% if @group.owner == current_user %>
+    <!-- 管理者（オーナー）の場合は削除ボタン -->
+    <%= link_to "グループ削除", @group, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger mb-3" %>
+  <% else %>
+    <!-- 参加中の一般メンバーには脱退ボタン -->
+    <%= button_to "グループを脱退する", leave_group_path(@group),
+          method: :delete, data: { confirm: "本当に脱退しますか？" },
+          class: "btn btn-warning mb-3" %>
+  <% end %>
+<% else %>
+  <!-- 未参加なら参加ボタン -->
+  <%= button_to "グループに参加する", join_group_path(@group),
+        method: :post, class: "btn btn-success mb-3" %>
 <% end %>
+
 <h2><%= @group.name %> 掲示板</h2>
 
 <div class="posts">
