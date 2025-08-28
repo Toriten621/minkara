@@ -11,13 +11,12 @@
 * カラオケが好きだが周りに同じ曲のジャンルが好きな人がいない時 
 * 自身の歌唱力を向上させたいが、周りに聞いてくれる人がいない時 
 ## 設計書
- 後ほど作成予定 
+ https://docs.google.com/spreadsheets/d/1Vym4IUNRXwHQ2LYRgpnthRm_AliYu8_2gH5vlAw31OE/edit?usp=sharing
 ## 開発環境
 - OS：Linux(CentOS)
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
 - フレームワーク：Ruby on Rails
 - JSライブラリ：jQuery
 - IDE：Cloud9
-​
 ## 使用素材
 いらすとや:https://www.irasutoya.com/
