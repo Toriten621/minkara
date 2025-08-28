@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+ .about-hero {
+  background-image: url("about_bg.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.about-hero .overlay {
+  background: rgba(0,0,0,0.5);
+  padding: 20px;
+  border-radius: 8px;
+}
