@@ -25,6 +25,12 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
+      if @post.image.attached?
+        tags = Vision.get_image_data(StringIO.new(@post.image.download))
+        tags.each do |tag|
+          @post.tags.create(name: tag)
+        end
+      end
       redirect_to @post, notice: '投稿が作成されました'
     else
       flash.now[:alert] = '必須項目を入力してください'

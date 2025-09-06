@@ -3,6 +3,7 @@ class Post < ApplicationRecord
   validates :title, presence: true
   validates :body, presence: true
   has_many :comments, dependent: :destroy
+  has_many :tags, dependent: :destroy
   has_one_attached :image
   def self.search(query)
     if query.present?

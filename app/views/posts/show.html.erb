@@ -1,7 +1,16 @@
 <h1><%= @post.title %></h1>
 <p><%= @post.body %></p>
 <p>作成者: <%= @post.user.email %></p>
+<% if @post.image.attached? %>
+  <%= image_tag @post.image, size: "300x300" %>
+<% end %>
 
+<h3>タグ一覧</h3>
+<ul>
+  <% @post.tags.each do |tag| %>
+    <li><%= tag.name %></li>
+  <% end %>
+</ul>
 <% if user_signed_in? && @post.user == current_user %>
   <%= link_to '編集', edit_post_path(@post) %>
   <%= link_to '削除', post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' } %>
