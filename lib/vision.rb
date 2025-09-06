@@ -31,7 +31,15 @@ module Vision
       response = http.request(request)
       result = JSON.parse(response.body)
 
-      result["responses"][0]["labelAnnotations"]&.map { |ann| ann["description"] } || []
+      Rails.logger.info("Vision API response: #{result}")
+
+      if result["responses"].present? &&
+         result["responses"][0].present? &&
+         result["responses"][0]["labelAnnotations"].present?
+        result["responses"][0]["labelAnnotations"].map { |ann| ann["description"] }
+      else
+        []
+      end
     end
   end
 end
