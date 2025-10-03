@@ -23,6 +23,16 @@ class UsersController < ApplicationController
     redirect_to new_user_registration_path, notice: '退会しました。'
   end
 
+  def followings
+    @user = User.find(params[:id])
+    @users = @user.followings
+  end
+  
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+  end
+
   private
 
   def set_user

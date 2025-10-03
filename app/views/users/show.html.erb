@@ -1,17 +1,29 @@
 <h1><%= @user.name %> さんのページ</h1>
+
 <% if @user.profile_image.attached? %>
   <%= image_tag @user.profile_image, size: "200x200", class: "rounded-circle" %>
 <% else %>
   <%= image_tag asset_path("default-image.jpg"), size: "200x200", class: "rounded-circle" %>
 <% end %>
+
 <h3>自己紹介</h3>
 <p><%= simple_format(@user.introduction) if @user.introduction.present? %></p>
+
 <h3>所属グループ</h3>
 <ul>
   <% @user.groups.each do |group| %>
     <li><%= link_to group.name, group %></li>
   <% end %>
 </ul>
+
+<% if current_user != @user %>
+  <% if current_user.following?(@user) %>
+    <%= button_to "フォロー解除", user_relationships_path(@user), method: :delete, class: "btn btn-danger" %>
+  <% else %>
+    <%= button_to "フォローする", user_relationships_path(@user), method: :post, class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
 <h2>あなたの投稿一覧</h2>
 <% @posts.each do |post| %>
   <p>
@@ -27,7 +39,7 @@
 
 <hr>
 
-<%= link_to 'プロフィール編集', edit_user_path(@user) %> |
+<%= link_to 'プロフィール編集', edit_user_registration_path %> |
 <%= button_to "退会する", user_registration_path,
               method: :delete,
               data: { confirm: "本当に退会しますか？" } %>

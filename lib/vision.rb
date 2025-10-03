@@ -31,6 +31,7 @@ module Vision
       response = http.request(request)
       result = JSON.parse(response.body)
       Rails.logger.info("Vision API response: #{result.inspect}")
+      Rails.logger.info("Vision API response: #{response.body}")
 
       if result["responses"].present? &&
          result["responses"][0].present? &&

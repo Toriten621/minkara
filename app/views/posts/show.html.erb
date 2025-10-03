@@ -1,6 +1,19 @@
 <h1><%= @post.title %></h1>
 <p><%= @post.body %></p>
-<p>作成者: <%= @post.user.email %></p>
+
+<p>
+  作成者: 
+  <%= link_to @post.user.name, user_path(@post.user), class: "fw-bold text-decoration-none" %>
+</p>
+
+<% if user_signed_in? && current_user != @post.user %>
+  <% if current_user.following?(@post.user) %>
+    <%= button_to "フォロー解除", user_relationships_path(@post.user), method: :delete, class: "btn btn-outline-danger btn-sm" %>
+  <% else %>
+    <%= button_to "フォローする", user_relationships_path(@post.user), method: :post, class: "btn btn-outline-primary btn-sm" %>
+  <% end %>
+<% end %>
+
 <% if @post.image.attached? %>
   <%= image_tag @post.image, size: "300x300" %>
 <% end %>
@@ -11,10 +24,12 @@
     <li><%= tag.name %></li>
   <% end %>
 </ul>
+
 <% if user_signed_in? && @post.user == current_user %>
   <%= link_to '編集', edit_post_path(@post) %>
   <%= link_to '削除', post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' } %>
 <% end %>
+
 <h3>コメント一覧</h3>
 <% @post.comments.each do |comment| %>
   <p>

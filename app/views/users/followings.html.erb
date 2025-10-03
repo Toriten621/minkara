@@ -1,0 +1,33 @@
+<h2><%= @user.name %> さんのフォロー一覧</h2>
+
+<div class="row">
+  <% @users.each do |user| %>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card text-center shadow-sm h-100">
+        <% if user.profile_image.attached? %>
+          <%= image_tag user.profile_image, class: "card-img-top rounded-circle mx-auto mt-3", style: "width:100px;height:100px;object-fit:cover;" %>
+        <% else %>
+          <%= image_tag asset_path("default-image.jpg"), class: "card-img-top rounded-circle mx-auto mt-3", style: "width:100px;height:100px;object-fit:cover;" %>
+        <% end %>
+
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= link_to user.name, user_path(user), class: "text-decoration-none" %>
+          </h5>
+
+          <% if user_signed_in? && current_user != user %>
+            <% if current_user.following?(user) %>
+              <%= button_to "フォロー解除", user_relationships_path(user),
+                    method: :delete,
+                    class: "btn btn-sm btn-outline-danger" %>
+            <% else %>
+              <%= button_to "フォローする", user_relationships_path(user),
+                    method: :post,
+                    class: "btn btn-sm btn-outline-primary" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -56,13 +56,22 @@
                 <li class="nav-item"><%= link_to "マイページ", user_path(current_user), class: "nav-link" %></li>
                 <li class="nav-item"><%= link_to "グループ一覧", groups_path, class: "nav-link" %></li>
                 <li class="nav-item"><%= link_to "グループ作成", new_group_path, class: "nav-link" %></li>
+                <li class="nav-item">
+                  <%= link_to followings_user_path(current_user), class: "nav-link" do %>
+                    フォロー一覧 <span class="badge bg-secondary"><%= current_user.followings.count %></span>
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to followers_user_path(current_user), class: "nav-link" do %>
+                    フォロワー一覧 <span class="badge bg-secondary"><%= current_user.followers.count %></span>
+                  <% end %>
+                </li>
                 <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
               <% else %>
                 <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "nav-link" %></li>
               <% end %>
             </ul>
 
-           
             <%= form_with url: posts_path, method: :get, local: true, class: "d-flex" do |f| %>
               <%= f.text_field :keyword, placeholder: "検索", class: "form-control me-2" %>
               <%= f.submit "検索", class: "btn btn-outline-success" %>
@@ -72,7 +81,6 @@
       </nav>
     </header>
 
-    
     <main class="container mt-4">
       <p class="notice text-success"><%= notice %></p>
       <p class="alert text-danger"><%= alert %></p>
